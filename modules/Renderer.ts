@@ -1,31 +1,57 @@
+import Util from "./Util"
 /**
  * Renderer
  */
 class Renderer {
-	private options
-	private code = () => {}
-	private blockquote = () => {}
-	private html = () => {}
-	private heading = () => {}
-	private hr = () => {}
-	private list = () => {}
-	private listitem = () => {}
-	private paragraph = () => {}
-	private table = () => {}
-	private tablerow = () => {}
-	private tablecell = () => {}
+	private opts
 
-	private _strong = () => {}
-	private _em = () => {}
-	private _code = () => {}
-	private _br = () => {}
-	private _del = () => {}
-	private _link = () => {}
-	private _image = () => {}
-	private _text = () => {}
-	private _ruby = () => {}
+	/**
+	 * Render <pre />
+	 * @type {[type]}
+	 */
+	code = (code, lang, escaped) => {
+		if(this.opts.highlight) {
+			const out = this.opts.highlight(code, lang)
+			if(out !== null && out !== code) {
+				escaped = true
+				code = out
+			}
+		}
+		code = escaped? code: Util.escape(code,true)
+		if(!lang) {
+			return `<pre><code>${code}\n</code></pre>\n`
+		}
+		return `<pre><code class="${this.opts.langPrefix}${Util.escape(lang,true)}">${code}\n</code></pre>\n`
+	}
+
+	/**
+	 * <blockquote />
+	 * @param {string} quote
+	 * @return {string}
+	 */
+	blockquote = (quote) => `<blockquote>\n${quote}\n</blockquote>\n`
+
+	html = () => {}
+	heading = () => {}
+	hr = () => {}
+	list = () => {}
+	listitem = () => {}
+	paragraph = () => {}
+	table = () => {}
+	tablerow = () => {}
+	tablecell = () => {}
+
+	_strong = () => {}
+	_em = () => {}
+	_code = () => {}
+	_br = () => {}
+	_del = () => {}
+	_link = () => {}
+	_image = () => {}
+	_text = () => {}
+	_ruby = () => {}
 	constructor(opts) {
-		this.options = opts
+		this.opts = opts
 	}
 }
 

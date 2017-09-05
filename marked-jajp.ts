@@ -1,4 +1,6 @@
-import Renderer = require("./modules/Renderer");
+import Renderer = require("./modules/Renderer")
+import Util = require("./modules/Util")
+
 
 /**
  * marked
@@ -136,42 +138,6 @@ class Marked {
 		if(this.option)
 	)
 
-	private static escape = (html:string, encode=false, map={'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}) => html.replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;').replace(/[<>"']/g, (m:'<'|'>'|'"'|"'")=>map[m])
-	private static unescape = (html:string) => {
-		// explicitly match decimal, hex, and named HTML entities
-		return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/g, (_, n) => {
-			n = n.toLowerCase()
-			if (n === 'colon') return ':'
-			if (n.charAt(0) === '#') {
-				return n.charAt(1) === 'x'
-					? String.fromCharCode(parseInt(n.substring(2), 16))
-					: String.fromCharCode(+n.substring(1))
-			}
-			return ''
-		})
-	}
-	private static replace = (regex:any, opt='') => {
-		let src = regex.source
-		return function self(name:any, val:any) {
-			if(!name) return new RegExp(src, opt)
-			let lVal = val.source || val
-			lVal = lVal.replace(/(^|[^\[])\^/g, '$1')
-			src = src.replace(name, lVal)
-			return self
-		}
-	}
-	private static merge = (...obj:any[]) => {
-		let targ:any, key:any;
-		for(let i = 1; i < obj.length; ++i) {
-			targ = obj[i]
-			for(key in targ) {
-				if((targ as object).hasOwnProperty(key)) {
-					obj[0][key] = targ[key]
-				}
-			}
-		}
-		return obj[0] as object
-	}
 
 
 	/**
