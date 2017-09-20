@@ -9,7 +9,7 @@ class Util {
 	 * @param {boolean} encode - Either or not encode "Character reference".
 	 * @return {string} Escaped string.
 	 */
-	static escape = (html, encode=false, map={'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}) => html.replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;').replace(/[<>"']/g, (m:'<'|'>'|'"'|"'")=>map[m])
+	static escape = (html:string, encode=false, map={'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}):string => html.replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;').replace(/[<>"']/g, (m:'<'|'>'|'"'|"'")=>map[m])
 
 	/**
 	 * unescape strings
@@ -17,7 +17,7 @@ class Util {
 	 * @return {string} unescaped string.
 	 * explicitly match decimal, hex, and named HTML entities
 	 */
-	static unescape = (html:string) => {
+	static unescape = (html:string):string => {
 		return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/g, (_, n) => {
 			n = n.toLowerCase()
 			if (n == 'colon') return ':'
