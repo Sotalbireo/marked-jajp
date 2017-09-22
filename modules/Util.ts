@@ -30,10 +30,6 @@ class Util {
 		})
 	}
 
-	/**
-	 *
-	 * @type {[type]}
-	 */
 	static replace = (regex:any, opt='') => {
 		let src = regex.source
 		return function self(name:any, val:any) {
@@ -45,11 +41,7 @@ class Util {
 		}
 	}
 
-	/**
-	 * [merge description]
-	 * @return {object} merged object.
-	 */
-	static merge = (...obj:any[]) => {
+	static merge = (...obj:any[]):object => {
 		for(let i = 1; i < obj.length; ++i) {
 			let targ = obj[i]
 			for(let k in targ) {
